@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">班友</string>
+    <string name="app_version_name">v%1s%2s</string>
+</resources>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_login_bg"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/ic_login_logo" />
+
+    <EditText
+        android:id="@+id/tvLoginMobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/shape_login_bg"
+        android:drawableLeft="@mipmap/ic_login_mobile"
+        android:drawablePadding="12dp"
+        android:hint="账号"
+        android:inputType="phone"
+        android:padding="12dp"
+        android:text="17601417313"
+        android:textColor="#4b4b4b"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/tvLoginPwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_login_bg"
+        android:drawableLeft="@mipmap/ic_login_password"
+        android:drawablePadding="12dp"
+        android:hint="密码"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:text="123456"
+        android:textColor="#4b4b4b"
+        android:textSize="13sp" />
+
+    <RadioGroup
+        android:id="@+id/rgLoginSelect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <RadioButton
+            android:id="@+id/rbLoginSeller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:checked="true"
+            android:text="商家"
+            android:textColor="#4b4b4b"
+            android:textSize="@dimen/text_size" />
+
+        <RadioButton
+            android:id="@+id/rbLoginClerk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="店员"
+            android:textColor="#4b4b4b"
+            android:textSize="@dimen/text_size" />
+
+        <RadioButton
+            android:id="@+id/rbLoginDispatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="配送员"
+            android:textColor="#4b4b4b"
+            android:textSize="@dimen/text_size" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tvConfirmLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_login_button"
+        android:paddingBottom="12dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="12dp"
+        android:text="登录"
+        android:textColor="@color/text_color"
+        android:textSize="14sp" />
+</LinearLayout>
