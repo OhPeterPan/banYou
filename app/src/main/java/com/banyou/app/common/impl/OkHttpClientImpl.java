@@ -31,12 +31,13 @@ public class OkHttpClientImpl implements IHttpClient {
     @Override
     public IResponse post(IRequest request) {
         IResponse baseResponse = null;
+        Call call = null;
         try {
             baseResponse = new BaseResponse();
             String requestBody = request.createNetSoapText();
             RequestBody body = RequestBody.create(MediaType.parse("text/xml; charset=utf-8"), requestBody);
             Request re = new Request.Builder().url(urlAddress).post(body).build();
-            Call call = client.newCall(re);
+            call = client.newCall(re);
             if (!NetworkUtils.isConnected() && call != null) {
                 baseResponse.setCode(BaseResponse.NET_EXCEPTION);
                 baseResponse.setData("网络异常");
@@ -62,6 +63,9 @@ public class OkHttpClientImpl implements IHttpClient {
             baseResponse.setCode(BaseResponse.NET_EXCEPTION);
             baseResponse.setData("Io异常");
             baseResponse.setException(e);
+        }
+        if (call != null && !call.isCanceled()) {
+            call.cancel();
         }
         return baseResponse;
     }

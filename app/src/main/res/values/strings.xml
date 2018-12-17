@@ -4,4 +4,24 @@
     <string name="order_count">%d</string>
     <string name="main_money">￥%.2f</string>
     <string name="time_detail">%1$s~%2$s</string>
+    <string name="order_query_condition">每日：%1$s%2$s所属门店：%3$s%4$s制单人：%5$s</string>
+    <string name="account_book_info1">会员卡充值：%s</string>
+    <string name="account_book_info2">会员卡消费：%s</string>
+    <string name="account_book_info3">非会员卡消费：%s</string>
+    <string name="account_book_info4">消费退款：%s</string>
+    <string name="account_book_info5">退卡退款：%s</string>
+
+    <string name="account_book_info6">消费：%s</string>
+    <string name="account_book_info7">退款：%s</string>
+
+    <string name="account_book_info8">门店：%s</string>
+    <string name="account_book_info9">班友购：%s</string>
+
+    <string name="account_book_info10">现金：%s</string>
+    <string name="account_book_info11">POS机刷卡：%s</string>
+    <string name="account_book_info12">银行转账：%s</string>
+    <string name="account_book_info13">支付宝支付：%s</string>
+    <string name="account_book_info14">微信支付：%s</string>
+    <string name="account_book_info15">银联云闪付：%s</string>
+    <string name="account_book_info16">渠道收入：%s</string>
 </resources>

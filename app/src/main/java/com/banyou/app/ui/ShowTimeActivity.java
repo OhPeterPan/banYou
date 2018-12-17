@@ -146,6 +146,14 @@ public class ShowTimeActivity extends BaseActivity implements RadioGroup.OnCheck
         date = "";
         startTime = tvStartTime.getText().toString().trim();
         endTime = tvEndTime.getText().toString().trim();
+        if (StringUtils.isEmpty(startTime)) {
+            ToastUtil.show("请选择开始时间！", Toast.LENGTH_SHORT);
+            return;
+        }
+        if (StringUtils.isEmpty(endTime)) {
+            ToastUtil.show("请选择结束时间！", Toast.LENGTH_SHORT);
+            return;
+        }
         setTimeResult(date, startTime, endTime);
     }
 

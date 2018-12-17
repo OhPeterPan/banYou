@@ -100,7 +100,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
 
     private void sendNet() {
         presenter.sendNet(date, startTime, endTime, account.companyid, account.fromType);
-        presenter.sendNet(page, date, startTime, endTime, account.companyid, account.fromType, true);
     }
 
     @Override
@@ -172,6 +171,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
             spannableString.setSpan(sizeSpan, 0, 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
             spannableString.setSpan(styleSpan, 0, 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
             tvIncomeMoney.setText(spannableString);
+
+            presenter.sendNet(page, date, startTime, endTime, account.companyid, account.fromType, true);
         } else {
             ToastUtil.show(response.errormsg, Toast.LENGTH_SHORT);
         }

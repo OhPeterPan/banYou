@@ -37,7 +37,6 @@ public class MainInfoModel {
                 IRequest request = new BaseRequest(hashMap, "orderQuerySimpleCount");
                 IResponse response = okHttpClient.post(request);
                 if (response.getCode() == BaseResponse.CODE_SUCCESS) {
-                    // LogUtils.iTag(getClass().getSimpleName(), response.getData());
                     String result = response.getData();
                     result = result.replaceAll("&lt;", "<");
                     result = result.replaceAll("&gt;", ">");

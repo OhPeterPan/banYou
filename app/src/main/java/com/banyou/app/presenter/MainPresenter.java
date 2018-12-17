@@ -24,16 +24,16 @@ public class MainPresenter extends BasePresenter<IMainView> {
     }
 
     public void sendNet(int page, String date, String startTime, String endTime, String companyId, String fromType, boolean showDialog) {
-        if (mView != null && showDialog)
-            mView.showLoading();
-        if (model != null)
-            model.sendNetQueryCount(page, date, startTime, endTime, companyId, fromType);
+        if (mView != null)
+            // mView.showLoading();
+            if (model != null)
+                model.sendNetQueryCount(page, date, startTime, endTime, companyId, fromType);
     }
 
     @Register
     private void getMainCount(MainCountResponse response) {
         if (mView != null) {
-            mView.hideLoading();
+            // mView.hideLoading();
             mView.getMainCountResult(response);
         }
     }

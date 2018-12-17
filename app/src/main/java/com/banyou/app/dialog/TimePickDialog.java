@@ -29,7 +29,7 @@ public class TimePickDialog extends Dialog {
     private OnChooseTimeListener listener;
 
     public TimePickDialog(@NonNull Context context, View v) {
-        super(context, R.style.dialogStyle);
+        super(context, R.style.commonDialog);
         this.mContext = context;
         this.mView = v;
     }
