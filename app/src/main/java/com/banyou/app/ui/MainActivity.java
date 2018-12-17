@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
                 startActivityForResult(new Intent(this, ShowTimeActivity.class), REQUEST_CODE);
                 break;
             case R.id.tvAccountBook://账本
-
+                startActivity(new Intent(this, AccountBookActivity.class));
                 break;
         }
     }

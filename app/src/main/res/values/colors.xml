@@ -3,4 +3,5 @@
     <color name="colorAccent">#433b4c</color>
     <color name="text_color">#433b4c</color>
     <color name="common_color">#473f50</color>
+    <color name="account_book_text_color">#555</color>
 </resources>
