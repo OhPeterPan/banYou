@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">班友</string>
     <string name="app_version_name">v%1s%2s</string>
+    <string name="order_count">%d</string>
+    <string name="main_money">￥%.2f</string>
+    <string name="time_detail">%1$s~%2$s</string>
 </resources>

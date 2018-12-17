@@ -4,8 +4,9 @@ import com.banyou.app.common.IResponse;
 
 public class BaseResponse implements IResponse {
 
-    public static int NET_EXCEPTION = 0x001;//联网返回异常
+    public static int NET_EXCEPTION = 0x00110;//联网返回异常
     public static int CODE_SUCCESS = 200;//联网成功
+    public static int RESULT_SUCCESS = 1;
     private int code;
     private String data;
     private Exception e;

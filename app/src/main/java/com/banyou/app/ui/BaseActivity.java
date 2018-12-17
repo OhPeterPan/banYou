@@ -9,6 +9,7 @@ import com.banyou.app.R;
 import com.banyou.app.common.IResponse;
 import com.banyou.app.dialog.LoadDialog;
 import com.banyou.app.presenter.BasePresenter;
+import com.blankj.utilcode.util.LogUtils;
 import com.gyf.barlibrary.ImmersionBar;
 
 import butterknife.ButterKnife;
@@ -32,15 +33,20 @@ public abstract class BaseActivity<T extends BasePresenter> extends
         initListener();
     }
 
+    protected abstract int getLayoutId();
+
+
     public void showLoading() {
         if (loadDialog != null && !loadDialog.isShowing()) {
+            LogUtils.iTag("wak", "来show?");
             loadDialog.show();
         }
     }
 
     public void hideLoading() {
         if (loadDialog != null && loadDialog.isShowing()) {
-            loadDialog.hide();
+            LogUtils.iTag("wak", "来hide");
+            loadDialog.dismiss();
         }
     }
 
@@ -63,10 +69,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends
         }
     }
 
-    protected abstract void initListener();
-
-    protected abstract void initData();
-
     private void initView() {
         back = findViewById(R.id.back);
         if (back != null) {
@@ -75,7 +77,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends
         loadDialog = new LoadDialog(this);
     }
 
-    protected abstract int getLayoutId();
+    protected abstract void initData();
+
+    protected abstract void initListener();
 
     protected abstract void onInnerListener(View v);
 

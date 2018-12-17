@@ -26,7 +26,7 @@
                 android:gravity="center"
                 android:text="班友收款"
                 android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:textSize="@dimen/title_size" />
 
             <TextView
                 android:id="@+id/tvMainSetting"
@@ -68,10 +68,10 @@
                     android:id="@+id/tvIncomeMoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥1234345"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="￥1234345" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -93,10 +93,10 @@
                     android:id="@+id/tvDealCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="5" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -132,6 +132,7 @@
                 android:background="@android:color/white" />
 
             <com.banyou.app.custom_view.ImageCenterTextView
+                android:id="@+id/tvAccountBook"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

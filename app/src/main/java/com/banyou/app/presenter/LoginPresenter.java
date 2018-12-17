@@ -1,10 +1,7 @@
 package com.banyou.app.presenter;
 
-import android.util.Log;
-
 import com.banyou.app.annotation.Register;
 import com.banyou.app.common.IHttpClient;
-import com.banyou.app.common.impl.BaseResponse;
 import com.banyou.app.common.impl.OkHttpClientImpl;
 import com.banyou.app.model.LoginModel;
 import com.banyou.app.response.UserLoginResponse;
@@ -32,15 +29,6 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         if (mView != null) {
             mView.hideLoading();
             mView.getLoginResult(response);
-        }
-    }
-
-    @Register
-    private void setLoginResults(BaseResponse response) {
-        Log.e("wak", "", response.getException());
-        if (mView != null) {
-            mView.hideLoading();
-            mView.error(response);
         }
     }
 }
