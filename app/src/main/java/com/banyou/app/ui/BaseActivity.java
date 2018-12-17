@@ -38,14 +38,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends
 
     public void showLoading() {
         if (loadDialog != null && !loadDialog.isShowing()) {
-            LogUtils.iTag("wak", "来show?");
             loadDialog.show();
         }
     }
 
     public void hideLoading() {
         if (loadDialog != null && loadDialog.isShowing()) {
-            LogUtils.iTag("wak", "来hide");
             loadDialog.dismiss();
         }
     }

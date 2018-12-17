@@ -25,4 +25,9 @@ public class Convert {
     public static <T> T fromJson(String result, Class<T> clazz) {
         return create().fromJson(result, clazz);
     }
+
+    public static <T> T fromJson(String result, Type type) {
+
+        return create().fromJson(result, type);
+    }
 }
