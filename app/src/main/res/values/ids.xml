@@ -3,4 +3,5 @@
     <item name="back" type="id" />
     <item name="toolbar" type="id" />
     <item name="recyclerView" type="id" />
+    <item name="viewStub" type="id">viewStub</item>
 </resources>

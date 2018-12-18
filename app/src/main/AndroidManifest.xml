@@ -3,7 +3,6 @@
     package="com.banyou.app">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -31,6 +30,9 @@
             android:name=".ui.ShowTimeActivity"
             android:theme="@style/dialogStyle" />
         <activity android:name=".ui.AccountBookActivity" />
+        <activity android:name=".ui.ReportFormsActivity" />
+        <activity android:name=".ui.OrderDetailActivity" />
+        <activity android:name=".ui.AboutActivity" />
     </application>
 
 </manifest>

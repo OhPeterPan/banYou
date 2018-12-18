@@ -4,4 +4,6 @@
     <color name="text_color">#433b4c</color>
     <color name="common_color">#473f50</color>
     <color name="account_book_text_color">#555</color>
+    <color name="order_detail_text_color">#7b7b7b</color>
+    <color name="order_detail_bg">#eee</color>
 </resources>

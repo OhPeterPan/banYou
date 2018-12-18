@@ -7,4 +7,5 @@
     <dimen name="account_book_text_size">13sp</dimen>
     <dimen name="account_book_child_text_size">12sp</dimen>
     <dimen name="account_frame_radius_size">3dp</dimen>
+    <dimen name="order_detail_text_size">12sp</dimen>
 </resources>

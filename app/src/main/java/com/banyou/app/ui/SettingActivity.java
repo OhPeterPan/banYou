@@ -1,6 +1,6 @@
 package com.banyou.app.ui;
 
-import android.support.v7.widget.Toolbar;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,10 +19,7 @@ import butterknife.BindView;
 
 
 public class SettingActivity extends BaseActivity {
-    @BindView(R.id.back)
-    ImageView back;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+
     @BindView(R.id.ivSettingLogo)
     ImageView ivSettingLogo;
     @BindView(R.id.tvSettingAccount)
@@ -35,6 +32,8 @@ public class SettingActivity extends BaseActivity {
     TextView tvSettingVersionCode;
     @BindView(R.id.tvConfirmExit)
     TextView tvConfirmExit;
+    @BindView(R.id.tvSettingAbout)
+    TextView tvSettingAbout;
 
     @Override
     public void initStatus() {
@@ -48,7 +47,7 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-
+        tvSettingAbout.setOnClickListener(this);
     }
 
     @Override
@@ -69,7 +68,11 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void onInnerListener(View v) {
-
+        switch (v.getId()) {
+            case R.id.tvSettingAbout:
+                startActivity(new Intent(this, AboutActivity.class));
+                break;
+        }
     }
 
 }

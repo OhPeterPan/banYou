@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/common_color">
+
+        <ImageView
+            android:id="@id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:scaleType="center"
+            android:src="@mipmap/ic_back" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="数据报表"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:background="#eee" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingBottom="9dp"
+                android:paddingRight="12dp"
+                android:paddingTop="9dp">
+
+                <TextView
+                    android:id="@+id/tvReportCalendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_calendar"
+                    android:layout_gravity="right"
+                    android:background="@drawable/shape_login_button"
+                    android:drawablePadding="6dp"
+                    android:drawableRight="@mipmap/ic_report_triangle"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:text="近7天"
+                    android:textColor="#666"
+                    android:textSize="13sp" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="9dp"
+                android:background="#eee" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="订单总额"
+                        android:textColor="#656565"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvReportOrderMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="0.00"
+                        android:textColor="#2a273a"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="订单笔数"
+                        android:textColor="#656565"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvReportOrderCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="0"
+                        android:textColor="#2a273a"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="9dp"
+                android:background="#eee" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="交易额趋势"
+                        android:textColor="#656565"
+                        android:textSize="12sp" />
+
+                    <RadioGroup
+                        android:id="@+id/rgReportForms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:background="#f0f0f0"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbReportFormsWeek"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/select_report_date_state"
+                            android:button="@null"
+                            android:checked="true"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:paddingBottom="6dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="6dp"
+                            android:text="近7天"
+                            android:textColor="#656565"
+                            android:textSize="12sp" />
+
+                        <RadioButton
+                            android:id="@+id/rbReportFormsMonth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/select_report_date_state"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:paddingBottom="6dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="6dp"
+                            android:text="月份"
+                            android:textColor="#656565"
+                            android:textSize="12sp" />
+
+                        <RadioButton
+                            android:id="@+id/rbReportFormsYear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/select_report_date_state"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:paddingBottom="6dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="6dp"
+                            android:text="年份"
+                            android:textColor="#656565"
+                            android:textSize="12sp" />
+                    </RadioGroup>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="6dp"
+                    android:paddingTop="12dp"
+                    android:text="交易数据趋势图"
+                    android:textColor="#7b7b7b"
+                    android:textSize="13sp" />
+
+                <ViewStub
+                    android:id="@id/viewStub"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp"
+                    android:text="金额"
+                    android:textColor="#2a273a"
+                    android:textSize="12.5sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvReportFormsOrderDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/shape_login_button"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="9dp"
+                    android:paddingTop="9dp"
+                    android:text="订单明细"
+                    android:textColor="#707070"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

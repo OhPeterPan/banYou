@@ -9,7 +9,6 @@ import com.banyou.app.R;
 import com.banyou.app.common.IResponse;
 import com.banyou.app.dialog.LoadDialog;
 import com.banyou.app.presenter.BasePresenter;
-import com.blankj.utilcode.util.LogUtils;
 import com.gyf.barlibrary.ImmersionBar;
 
 import butterknife.ButterKnife;
@@ -49,7 +48,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends
     }
 
     public void error(IResponse response) {
-
+        hideLoading();
     }
 
     protected abstract void initPresenter();
@@ -63,7 +62,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends
         super.onDestroy();
         ImmersionBar.with(this).destroy(); //必须调用该方法，防止内存泄漏
         if (presenter != null) {
+
             presenter.destroy();
+
         }
     }
 

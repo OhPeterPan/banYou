@@ -51,6 +51,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     TextView tvDealCount;
     @BindView(R.id.tvAccountBook)
     TextView tvAccountBook;
+    @BindView(R.id.tvReportForms)
+    TextView tvReportForms;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private String date = "day";
@@ -80,6 +82,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         tvMainSetting.setOnClickListener(this);
         tvMainTime.setOnClickListener(this);
         tvAccountBook.setOnClickListener(this);
+        tvReportForms.setOnClickListener(this);
     }
 
     @Override
@@ -124,6 +127,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
                 break;
             case R.id.tvAccountBook://账本
                 startActivity(new Intent(this, AccountBookActivity.class));
+                break;
+            case R.id.tvReportForms://报表
+                startActivity(new Intent(this, ReportFormsActivity.class));
                 break;
         }
     }

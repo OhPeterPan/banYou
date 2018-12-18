@@ -20,7 +20,7 @@ public abstract class BasePresenter<T extends IView> {
     }
 
     @Register
-    private void setLoginResults(BaseResponse response) {
+    public void error(BaseResponse response) {
         Log.e(getClass().getSimpleName(), "", response.getException());
         if (mView != null) {
             mView.hideLoading();
