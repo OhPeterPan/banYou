@@ -56,9 +56,9 @@
                     android:id="@+id/tvReportCalendar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/ic_calendar"
                     android:layout_gravity="right"
                     android:background="@drawable/shape_login_button"
+                    android:drawableLeft="@mipmap/ic_calendar"
                     android:drawablePadding="6dp"
                     android:drawableRight="@mipmap/ic_report_triangle"
                     android:gravity="center"
@@ -230,6 +230,10 @@
                     android:id="@id/viewStub"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
