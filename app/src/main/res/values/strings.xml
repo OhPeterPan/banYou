@@ -26,4 +26,5 @@
     <string name="account_book_info16">渠道收入：%s</string>
     <string name="order_info">订单笔数：%1$d%n微信总额：%2$.2f元   支付宝总额：%3$.2f元   银联云闪付总额：%4$.2f元</string>
     <string name="about_version_name">班友收款宝%n%s</string>
+    <string name="about_bottom_info">班友信息科技 版权所有%nCopyright  %s Banu Information Technology Co., Ltd.%n All Rights Reserved.</string>
 </resources>

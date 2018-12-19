@@ -77,5 +77,5 @@
         android:paddingBottom="15dp"
         android:text="班友信息科技 版权所有"
         android:textColor="#aaa"
-        android:textSize="12sp" />
+        android:textSize="11sp" />
 </LinearLayout>

@@ -112,7 +112,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.banyou.app.custom_view.ImageCenterTextView
+            <com.banutech.collectiontreasure.custom_view.ImageCenterTextView
+                android:id="@+id/tvMainPay"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -131,7 +132,7 @@
                 android:layout_marginTop="6dp"
                 android:background="@android:color/white" />
 
-            <com.banyou.app.custom_view.ImageCenterTextView
+            <com.banutech.collectiontreasure.custom_view.ImageCenterTextView
                 android:id="@+id/tvAccountBook"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -150,7 +151,7 @@
                 android:layout_marginTop="6dp"
                 android:background="@android:color/white" />
 
-            <com.banyou.app.custom_view.ImageCenterTextView
+            <com.banutech.collectiontreasure.custom_view.ImageCenterTextView
                 android:id="@+id/tvReportForms"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
