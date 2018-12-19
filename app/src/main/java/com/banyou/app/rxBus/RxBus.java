@@ -50,13 +50,17 @@ public class RxBus {
                     @Override
                     public void accept(Object o) throws Exception {
                         if (o != null) {
-                            for (Object object : list) {
-                                if (object != null)
-                                    send(object, o);
-                            }
+                            send(o);
                         }
                     }
                 });
+    }
+
+    private void send(Object o) {
+        for (Object object : list) {
+            if (object != null)
+                send(object, o);
+        }
     }
 
     private void send(Object object, Object o) {

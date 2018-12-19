@@ -226,12 +226,8 @@
                     android:textColor="#7b7b7b"
                     android:textSize="13sp" />
 
-                <ViewStub
-                    android:id="@id/viewStub"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <com.github.mikephil.charting.charts.LineChart
+                <FrameLayout
+                    android:id="@+id/reportData"
                     android:layout_width="match_parent"
                     android:layout_height="300dp" />
 

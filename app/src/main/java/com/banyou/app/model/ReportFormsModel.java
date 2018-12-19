@@ -7,8 +7,8 @@ import com.banyou.app.common.IRequest;
 import com.banyou.app.common.IResponse;
 import com.banyou.app.common.impl.BaseRequest;
 import com.banyou.app.common.impl.BaseResponse;
-import com.banyou.app.response.OrderDetailCountResponse;
-import com.banyou.app.response.OrderDetailListResponse;
+import com.banyou.app.response.ReportChartResponse;
+import com.banyou.app.response.ReportFormsResponse;
 import com.banyou.app.rxBus.RxBus;
 import com.thoughtworks.xstream.XStream;
 
@@ -17,10 +17,10 @@ import java.util.HashMap;
 
 import io.reactivex.functions.Function;
 
-public class OrderDetailModel {
-    private IHttpClient client;
+public class ReportFormsModel {
+    IHttpClient client;
 
-    public OrderDetailModel(IHttpClient client) {
+    public ReportFormsModel(IHttpClient client) {
         this.client = new WeakReference<>(client).get();
     }
 
@@ -49,18 +49,18 @@ public class OrderDetailModel {
                 hashMap.put("end", endTime);
                 hashMap.put("companyid", companyId);
                 hashMap.put("fromType", fromType);
-                IRequest request = new BaseRequest(hashMap, "orderQuerySimpleCount");
+                IRequest request = new BaseRequest(hashMap, "queryOrderDate");
                 IResponse response = client.post(request);
                 if (response.getCode() == BaseResponse.CODE_SUCCESS) {
                     String result = response.getData();
                     result = chainResult(result);
-                    Log.i("wak", result);
-                    OrderDetailCountResponse orderResponse = null;
+                    //Log.i("wak", result);
+                    ReportFormsResponse orderResponse = null;
                     try {
                         XStream xStream = new XStream();
                         xStream.autodetectAnnotations(true);
-                        xStream.processAnnotations(OrderDetailCountResponse.class);
-                        orderResponse = (OrderDetailCountResponse) xStream.fromXML(result.trim());
+                        xStream.processAnnotations(ReportFormsResponse.class);
+                        orderResponse = (ReportFormsResponse) xStream.fromXML(result.trim());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -74,37 +74,31 @@ public class OrderDetailModel {
         });
     }
 
-    public void sendNetQueryCount(final int page, final String date, final String startTime, final String endTime,
-                                  final String companyId, final String fromType) {
-
+    public void sendNetQueryCount(final String chartDate, final String companyId, final String fromType) {
         RxBus.getInstance().chain(new Function() {
             @Override
             public Object apply(Object o) throws Exception {
                 HashMap hashMap = new HashMap<>();
-                hashMap.put("date", date);
-                hashMap.put("start", startTime);
-                hashMap.put("end", endTime);
-                hashMap.put("page", String.valueOf(page));
+                hashMap.put("date", chartDate);
                 hashMap.put("companyid", companyId);
                 hashMap.put("fromType", fromType);
-                IRequest request = new BaseRequest(hashMap, "orderQuerySimple");
+                IRequest request = new BaseRequest(hashMap, "queryOrderChart");
                 IResponse response = client.post(request);
                 if (response.getCode() == BaseResponse.CODE_SUCCESS) {
-                    // LogUtils.iTag(getClass().getSimpleName(), response.getData());
                     String result = response.getData();
                     result = chainResult(result);
                     Log.i("wak", result);
-                    OrderDetailListResponse mainResponse = null;
+                    ReportChartResponse orderResponse = null;
                     try {
                         XStream xStream = new XStream();
                         xStream.autodetectAnnotations(true);
-                        xStream.processAnnotations(OrderDetailListResponse.class);
-                        mainResponse = (OrderDetailListResponse) xStream.fromXML(result.trim());
+                        xStream.processAnnotations(ReportChartResponse.class);
+                        orderResponse = (ReportChartResponse) xStream.fromXML(result.trim());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    if (mainResponse != null)
-                        return mainResponse;
+                    if (orderResponse != null)
+                        return orderResponse;
                     response.setException(new IllegalArgumentException("数据解析错误"));
                 }
                 return response;
