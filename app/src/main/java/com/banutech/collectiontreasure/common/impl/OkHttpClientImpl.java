@@ -3,6 +3,7 @@ package com.banutech.collectiontreasure.common.impl;
 import com.banutech.collectiontreasure.common.IHttpClient;
 import com.banutech.collectiontreasure.common.IRequest;
 import com.banutech.collectiontreasure.common.IResponse;
+import com.banutech.collectiontreasure.util.LogUtil;
 import com.blankj.utilcode.util.NetworkUtils;
 
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class OkHttpClientImpl implements IHttpClient {
             }
 
             Response response = call.execute();
-
+            LogUtil.logI("wak", "当前联网返回码:" + response.code());
             if (response.code() == BaseResponse.CODE_SUCCESS) {
                 baseResponse.setCode(response.code());
                 baseResponse.setData(response.body().string());
