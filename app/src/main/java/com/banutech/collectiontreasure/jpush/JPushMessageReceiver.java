@@ -4,8 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 
 import com.banutech.collectiontreasure.rxBus.RxBus;
+import com.banutech.collectiontreasure.service.TTSService;
 import com.blankj.utilcode.util.LogUtils;
 
 import cn.jpush.android.api.JPushInterface;
@@ -24,7 +26,7 @@ public class JPushMessageReceiver extends BroadcastReceiver {
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
             LogUtils.iTag(TAG, "接受到推送下来的通知");
             String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-            startVoiceBroadcast(extras);
+            startVoiceBroadcast(context, extras);
             //LogUtil.logI(TAG, "自定义通知!!" + extras);
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             LogUtils.iTag(TAG, "用户点击打开了通知");
@@ -34,7 +36,9 @@ public class JPushMessageReceiver extends BroadcastReceiver {
         }
     }
 
-    private void startVoiceBroadcast(String extras) {//{"order_code":"123456","price":"2000","type_id":"7","type_name":"支付宝"}  格式
+    private void startVoiceBroadcast(Context context, String extras) {//{"order_code":"123456","price":"2000","type_id":"7","type_name":"支付宝"}  格式
         RxBus.getInstance().send(extras);
+        ContextCompat.startForegroundService(context, new Intent(context, TTSService.class).putExtra("notification", extras));
     }
+
 }

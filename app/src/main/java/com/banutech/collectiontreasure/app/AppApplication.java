@@ -2,19 +2,17 @@ package com.banutech.collectiontreasure.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.support.multidex.MultiDex;
+import android.support.v4.content.ContextCompat;
 
+import com.banutech.collectiontreasure.service.TTSService;
 import com.banutech.collectiontreasure.util.SystemUtil;
 import com.banutech.collectiontreasure.util.TTSUtils;
-import com.banutech.collectiontreasure.util.UIUtil;
 import com.blankj.utilcode.util.Utils;
 import com.iflytek.cloud.Setting;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
-import com.yanzhenjie.album.Album;
-import com.yanzhenjie.album.AlbumConfig;
-
-import java.util.Locale;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -36,17 +34,19 @@ public class AppApplication extends Application {
 
         JPushInterface.setDebugMode(SystemUtil.getDebug());
         JPushInterface.init(getApplicationContext());
-        Album.initialize(
+  /*      Album.initialize(
                 AlbumConfig.newBuilder(UIUtil.getContext())
                         .setLocale(Locale.getDefault())
                         .build()
-        );
+        );*/
+        //开启一个前台服务
+        ContextCompat.startForegroundService(getApplicationContext(), new Intent(getApplicationContext(), TTSService.class));
     }
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
-
 
 }

@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
@@ -26,7 +25,6 @@ import com.banutech.collectiontreasure.R;
 import com.banutech.collectiontreasure.bean.LoginBean;
 import com.banutech.collectiontreasure.bean.MainCountBean;
 import com.banutech.collectiontreasure.bean.MainListBean;
-import com.banutech.collectiontreasure.bean.PayResultMean;
 import com.banutech.collectiontreasure.bean.QRcodeBean;
 import com.banutech.collectiontreasure.code.encode.CodeCreator;
 import com.banutech.collectiontreasure.common.impl.BaseResponse;
@@ -38,12 +36,10 @@ import com.banutech.collectiontreasure.response.MainListResponse;
 import com.banutech.collectiontreasure.response.QRcodeResponse;
 import com.banutech.collectiontreasure.rxBus.RxBus;
 import com.banutech.collectiontreasure.util.Convert;
-import com.banutech.collectiontreasure.util.DecimalUtil;
 import com.banutech.collectiontreasure.util.IntentUtil;
 import com.banutech.collectiontreasure.util.LogUtil;
 import com.banutech.collectiontreasure.util.NumberUtil;
 import com.banutech.collectiontreasure.util.SpUtil;
-import com.banutech.collectiontreasure.util.TTSUtils;
 import com.banutech.collectiontreasure.util.ToastUtil;
 import com.banutech.collectiontreasure.util.UIUtil;
 import com.banutech.collectiontreasure.view.IMainView;
@@ -115,13 +111,17 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         initAdapter();
         sendNet();
         showCheckNotification();
+        checkPermissionManager();
+    }
+
+    private void checkPermissionManager() {
+        PermissionManager.getInstance().startRequestPermission(this, null, Manifest.permission.RECORD_AUDIO);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         RxBus.getInstance().remove(presenter);
-        TTSUtils.getInstance().release();//释放资源
     }
 
     private void showCheckNotification() {
@@ -185,8 +185,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
                 startActivity(new Intent(this, ReportFormsActivity.class));
                 break;
             case R.id.tvMainPay://收款  暂时用来测试支付宝或微信收款
-           /*     String payType = "7";
-                String price = String.valueOf(new Random().nextInt(2000));*/
                 presenter.sendNetPayCode(account.storeId, account.companyid, account.fromType);
                 break;
         }
@@ -233,7 +231,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
             spannableString.setSpan(sizeSpan, 0, 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
             spannableString.setSpan(styleSpan, 0, 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
             tvIncomeMoney.setText(spannableString);
-
             presenter.sendNet(page, date, startTime, endTime, account.companyid, account.fromType, account.storeId, true);
         } else {
             ToastUtil.show(response.errormsg, Toast.LENGTH_SHORT);
@@ -272,23 +269,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     }
 
     @Override
-    public void speak(final String message) {//语音播报
+    public void speak(final String message) {//语音播报(播放逻辑已经挪到服务中)
         account = (LoginBean) SpUtil.get(SpUtil.ACCOUNT, LoginBean.class);
         if (QRcode != null && QRcode.isShowing())
             QRcode.dismiss();
         sendNet();
-        if (TextUtils.equals("0", account.is_broadcast)) {
-            return;
-        }
-
-        PermissionManager.getInstance().startRequestPermission(this, new Runnable() {
-            @Override
-            public void run() {
-                PayResultMean payResultMean = Convert.fromJson(message, PayResultMean.class);
-                String result = new StringBuilder().append(payResultMean.type_name).append("收款").append(DecimalUtil.replaceZero(payResultMean.price)).append("元").toString();
-                TTSUtils.getInstance().speak(result);
-            }
-        }, Manifest.permission.RECORD_AUDIO);
     }
 
     @Override

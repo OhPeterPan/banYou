@@ -40,7 +40,8 @@ public class PermissionManager {
                 .onGranted(new Action() {
                     @Override
                     public void onAction(List<String> permissions) {
-                        runnable.run();
+                        if (runnable != null)
+                            runnable.run();
                     }
                 })
                 // 用户拒绝权限，包括不再显示权限弹窗也在此列

@@ -184,6 +184,10 @@
         <activity android:name=".ui.OrderDetailActivity" />
         <activity android:name=".ui.AboutActivity" />
         <activity android:name=".ui.UserSchemeActivity" />
+
+        <service
+            android:name=".service.TTSService"
+            android:exported="false" />
     </application>
 
 </manifest>
