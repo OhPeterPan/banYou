@@ -1,7 +1,9 @@
 package com.banutech.collectiontreasure.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -16,7 +18,6 @@ import com.banutech.collectiontreasure.response.UserLoginResponse;
 import com.banutech.collectiontreasure.rxBus.RxBus;
 import com.banutech.collectiontreasure.util.Convert;
 import com.banutech.collectiontreasure.util.IntentUtil;
-import com.banutech.collectiontreasure.util.LogUtil;
 import com.banutech.collectiontreasure.util.SpUtil;
 import com.banutech.collectiontreasure.util.ToastUtil;
 import com.banutech.collectiontreasure.view.ILoginView;
@@ -98,13 +99,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Radio
             LoginBean loginBean = Convert.fromJson(response.returninfo, LoginBean.class);
             loginBean.mobile = tvLoginMobile.getText().toString().trim();
             List<StoreBean> storeList = loginBean.store_list;
+       /*     StoreBean bean = new StoreBean();
+            bean.store_id = "123";
+            bean.store_name = "hahaha";
+            storeList.add(bean);*/
             if (storeList != null) {
                 if (storeList.size() == 1) {
-                    LogUtil.logI("wak", "来这里？");
                     loginBean.storeId = storeList.get(0).store_id;
                     startActivityMain(loginBean);
                 } else {
-                    showSelectStoreDialog(storeList);
+                    showSelectStoreDialog(loginBean, storeList);
                 }
             } else {
                 ToastUtil.show("无店铺", Toast.LENGTH_SHORT);
@@ -115,8 +119,22 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Radio
         }
     }
 
-    private void showSelectStoreDialog(List<StoreBean> storeList) {
+    private void showSelectStoreDialog(final LoginBean loginBean, final List<StoreBean> storeList) {
+        final String[] strName = new String[storeList.size()];
+        for (int i = 0; i < storeList.size(); i++) {
+            strName[i] = storeList.get(i).store_name;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Dialog);
 
+        builder.setItems(strName, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                loginBean.storeId = storeList.get(which).store_id;
+                startActivityMain(loginBean);
+            }
+        });
+
+        builder.show();
     }
 
     private void startActivityMain(LoginBean loginBean) {

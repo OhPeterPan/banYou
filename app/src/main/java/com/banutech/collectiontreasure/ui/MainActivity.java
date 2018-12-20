@@ -86,6 +86,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     private boolean hasMore = true;
     private LoginBean account;
     private MainAdapter adapter;
+    private QRcodeDialog QRcode;
 
     @Override
     public void initStatus() {
@@ -158,6 +159,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     }
 
     private void sendNet() {
+        page = 1;
+        isRefresh = true;
         presenter.sendNet(date, startTime, endTime, account.companyid, account.fromType, account.storeId);
     }
 
@@ -211,8 +214,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
                         tvMainTime.setText("近30天");
                         break;
                 }
-                isRefresh = true;
-                page = 1;
                 sendNet();
             }
         }
@@ -273,6 +274,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     @Override
     public void speak(final String message) {//语音播报
         account = (LoginBean) SpUtil.get(SpUtil.ACCOUNT, LoginBean.class);
+        if (QRcode != null && QRcode.isShowing())
+            QRcode.dismiss();
+        sendNet();
         if (TextUtils.equals("0", account.is_broadcast)) {
             return;
         }
@@ -301,6 +305,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         try {
             Bitmap bitmap = CodeCreator.createQRCode(qRcodeBean.code);
             QRcodeDialog qRcodeDialog = new QRcodeDialog(this, bitmap);
+            this.QRcode = qRcodeDialog;
             qRcodeDialog.show();
         } catch (WriterException e) {
             e.printStackTrace();
