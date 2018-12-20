@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 import io.reactivex.functions.Function;
 
-public class LoginModel {
+public class LoginModel extends BaseModel {
 
     private IHttpClient okHttpClient;
 
@@ -34,16 +34,7 @@ public class LoginModel {
                 IResponse response = okHttpClient.post(request);
                 if (response.getCode() == BaseResponse.CODE_SUCCESS) {//成功
                     String result = response.getData();
-                    result = result.replaceAll("&lt;", "<");
-                    result = result.replaceAll("&gt;", ">");
-                    result = result.replaceAll("<return>", "");
-                    result = result.replaceAll("</return>", "");
-                    result = result.replaceAll("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">", "");
-                    result = result.replaceAll("</soap:Envelope>", "");
-                    result = result.replaceAll("<soap:Header>", "");
-                    result = result.replaceAll("</soap:Header>", "");
-                    result = result.replaceAll("<soap:Body>", "");
-                    result = result.replaceAll("</soap:Body>", "");
+                    result = parseXmlResult(result);
                     Log.i("wak", result);
                     UserLoginResponse loginResponse = null;
                     try {

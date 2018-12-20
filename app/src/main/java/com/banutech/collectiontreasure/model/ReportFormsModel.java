@@ -17,26 +17,13 @@ import java.util.HashMap;
 
 import io.reactivex.functions.Function;
 
-public class ReportFormsModel {
+public class ReportFormsModel extends BaseModel{
     IHttpClient client;
 
     public ReportFormsModel(IHttpClient client) {
         this.client = new WeakReference<>(client).get();
     }
 
-    private String chainResult(String result) {
-        result = result.replaceAll("&lt;", "<");
-        result = result.replaceAll("&gt;", ">");
-        result = result.replaceAll("<return>", "");
-        result = result.replaceAll("</return>", "");
-        result = result.replaceAll("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">", "");
-        result = result.replaceAll("</soap:Envelope>", "");
-        result = result.replaceAll("<soap:Header>", "");
-        result = result.replaceAll("</soap:Header>", "");
-        result = result.replaceAll("<soap:Body>", "");
-        result = result.replaceAll("</soap:Body>", "");
-        return result;
-    }
 
     public void sendNetQueryCount(final String date, final String startTime, final String endTime, final String companyId, final String fromType) {
         RxBus.getInstance().chain(new Function() {
@@ -52,7 +39,7 @@ public class ReportFormsModel {
                 IResponse response = client.post(request);
                 if (response.getCode() == BaseResponse.CODE_SUCCESS) {
                     String result = response.getData();
-                    result = chainResult(result);
+                    result = parseXmlResult(result);
                     //Log.i("wak", result);
                     ReportFormsResponse orderResponse = null;
                     try {
@@ -85,7 +72,7 @@ public class ReportFormsModel {
                 IResponse response = client.post(request);
                 if (response.getCode() == BaseResponse.CODE_SUCCESS) {
                     String result = response.getData();
-                    result = chainResult(result);
+                    result = parseXmlResult(result);
                     Log.i("wak", result);
                     ReportChartResponse orderResponse = null;
                     try {

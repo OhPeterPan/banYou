@@ -1,7 +1,9 @@
 package com.banutech.collectiontreasure.ui;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
@@ -12,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
@@ -24,12 +27,18 @@ import com.banutech.collectiontreasure.bean.LoginBean;
 import com.banutech.collectiontreasure.bean.MainCountBean;
 import com.banutech.collectiontreasure.bean.MainListBean;
 import com.banutech.collectiontreasure.bean.PayResultMean;
+import com.banutech.collectiontreasure.bean.QRcodeBean;
+import com.banutech.collectiontreasure.code.encode.CodeCreator;
 import com.banutech.collectiontreasure.common.impl.BaseResponse;
+import com.banutech.collectiontreasure.dialog.QRcodeDialog;
+import com.banutech.collectiontreasure.permission.PermissionManager;
 import com.banutech.collectiontreasure.presenter.MainPresenter;
 import com.banutech.collectiontreasure.response.MainCountResponse;
 import com.banutech.collectiontreasure.response.MainListResponse;
+import com.banutech.collectiontreasure.response.QRcodeResponse;
 import com.banutech.collectiontreasure.rxBus.RxBus;
 import com.banutech.collectiontreasure.util.Convert;
+import com.banutech.collectiontreasure.util.DecimalUtil;
 import com.banutech.collectiontreasure.util.IntentUtil;
 import com.banutech.collectiontreasure.util.NumberUtil;
 import com.banutech.collectiontreasure.util.SpUtil;
@@ -38,10 +47,8 @@ import com.banutech.collectiontreasure.util.ToastUtil;
 import com.banutech.collectiontreasure.util.UIUtil;
 import com.banutech.collectiontreasure.view.IMainView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.zxing.WriterException;
 import com.gyf.barlibrary.ImmersionBar;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 import butterknife.BindView;
 import cn.jpush.android.api.JPushInterface;
@@ -79,7 +86,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     private LoginBean account;
     private MainAdapter adapter;
 
-
     @Override
     public void initStatus() {
         ImmersionBar.with(this).fitsSystemWindows(true).statusBarColor(R.color.common_color).init();
@@ -107,7 +113,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         initAdapter();
         sendNet();
         showCheckNotification();
-        checkVoicePermission();
     }
 
     @Override
@@ -152,7 +157,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     }
 
     private void sendNet() {
-        presenter.sendNet(date, startTime, endTime, account.companyid, account.fromType);
+        presenter.sendNet(date, startTime, endTime, account.companyid, account.fromType, account.storeId);
     }
 
     @Override
@@ -176,9 +181,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
                 startActivity(new Intent(this, ReportFormsActivity.class));
                 break;
             case R.id.tvMainPay://收款  暂时用来测试支付宝或微信收款
-                String payType = "7";
-                String price = "2000.01";
-                presenter.sendNetPay(payType, price);
+           /*     String payType = "7";
+                String price = String.valueOf(new Random().nextInt(2000));*/
+                presenter.sendNetPayCode(account.storeId, account.companyid, account.fromType);
                 break;
         }
     }
@@ -227,7 +232,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
             spannableString.setSpan(styleSpan, 0, 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
             tvIncomeMoney.setText(spannableString);
 
-            presenter.sendNet(page, date, startTime, endTime, account.companyid, account.fromType, true);
+            presenter.sendNet(page, date, startTime, endTime, account.companyid, account.fromType, account.storeId, true);
         } else {
             ToastUtil.show(response.errormsg, Toast.LENGTH_SHORT);
         }
@@ -256,19 +261,47 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         }
     }
 
-    NumberFormat nf = new DecimalFormat("#.##");
 
     @Override
-    public void speak(String message) {
-        PayResultMean payResultMean = Convert.fromJson(message, PayResultMean.class);
-        String price = nf.format(payResultMean.price);
-        String result = new StringBuilder().append(payResultMean.type_name).append("收款").append(price).append("元").toString();
-        TTSUtils.getInstance().speak(result);
+    public void speak(final String message) {//语音播报
+        account = (LoginBean) SpUtil.get(SpUtil.ACCOUNT, LoginBean.class);
+        if (TextUtils.equals("0", account.is_broadcast)) {
+            return;
+        }
+
+        PermissionManager.getInstance().startRequestPermission(this, new Runnable() {
+            @Override
+            public void run() {
+                PayResultMean payResultMean = Convert.fromJson(message, PayResultMean.class);
+                String result = new StringBuilder().append(payResultMean.type_name).append("收款").append(DecimalUtil.replaceZero(payResultMean.price)).append("元").toString();
+                TTSUtils.getInstance().speak(result);
+            }
+        }, Manifest.permission.RECORD_AUDIO);
+    }
+
+    @Override
+    public void getQRcodeResult(QRcodeResponse response) {
+        if (response.returncode == BaseResponse.RESULT_SUCCESS) {
+            QRcodeBean qRcodeBean = Convert.fromJson(response.returninfo, QRcodeBean.class);
+            showQRcodeDialog(qRcodeBean);
+        } else {
+            ToastUtil.show(response.errormsg, Toast.LENGTH_SHORT);
+        }
+    }
+
+    private void showQRcodeDialog(QRcodeBean qRcodeBean) {
+        try {
+            Bitmap bitmap = CodeCreator.createQRCode(qRcodeBean.code);
+            QRcodeDialog qRcodeDialog = new QRcodeDialog(this, bitmap);
+            qRcodeDialog.show();
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onLoadMoreRequested() {
         isRefresh = false;
-        presenter.sendNet(page, date, startTime, endTime, account.companyid, account.fromType, false);
+        presenter.sendNet(page, date, startTime, endTime, account.companyid, account.fromType, account.storeId, false);
     }
 }

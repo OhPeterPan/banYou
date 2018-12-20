@@ -17,25 +17,11 @@ import java.util.HashMap;
 
 import io.reactivex.functions.Function;
 
-public class OrderDetailModel {
+public class OrderDetailModel extends BaseModel {
     private IHttpClient client;
 
     public OrderDetailModel(IHttpClient client) {
         this.client = new WeakReference<>(client).get();
-    }
-
-    private String chainResult(String result) {
-        result = result.replaceAll("&lt;", "<");
-        result = result.replaceAll("&gt;", ">");
-        result = result.replaceAll("<return>", "");
-        result = result.replaceAll("</return>", "");
-        result = result.replaceAll("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">", "");
-        result = result.replaceAll("</soap:Envelope>", "");
-        result = result.replaceAll("<soap:Header>", "");
-        result = result.replaceAll("</soap:Header>", "");
-        result = result.replaceAll("<soap:Body>", "");
-        result = result.replaceAll("</soap:Body>", "");
-        return result;
     }
 
     public void sendNetQueryCount(final String date, final String startTime, final String endTime, final String companyId, final String fromType) {
@@ -49,11 +35,12 @@ public class OrderDetailModel {
                 hashMap.put("end", endTime);
                 hashMap.put("companyid", companyId);
                 hashMap.put("fromType", fromType);
+                hashMap.put("store_id", "0");
                 IRequest request = new BaseRequest(hashMap, "orderQuerySimpleCount");
                 IResponse response = client.post(request);
                 if (response.getCode() == BaseResponse.CODE_SUCCESS) {
                     String result = response.getData();
-                    result = chainResult(result);
+                    result = parseXmlResult(result);
                     Log.i("wak", result);
                     OrderDetailCountResponse orderResponse = null;
                     try {
@@ -87,12 +74,13 @@ public class OrderDetailModel {
                 hashMap.put("page", String.valueOf(page));
                 hashMap.put("companyid", companyId);
                 hashMap.put("fromType", fromType);
+                hashMap.put("store_id", "0");
                 IRequest request = new BaseRequest(hashMap, "orderQuerySimple");
                 IResponse response = client.post(request);
                 if (response.getCode() == BaseResponse.CODE_SUCCESS) {
                     // LogUtils.iTag(getClass().getSimpleName(), response.getData());
                     String result = response.getData();
-                    result = chainResult(result);
+                    result = parseXmlResult(result);
                     Log.i("wak", result);
                     OrderDetailListResponse mainResponse = null;
                     try {

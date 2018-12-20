@@ -6,6 +6,7 @@ import com.banutech.collectiontreasure.common.impl.OkHttpClientImpl;
 import com.banutech.collectiontreasure.model.MainInfoModel;
 import com.banutech.collectiontreasure.response.MainCountResponse;
 import com.banutech.collectiontreasure.response.MainListResponse;
+import com.banutech.collectiontreasure.response.QRcodeResponse;
 import com.banutech.collectiontreasure.view.IMainView;
 import com.blankj.utilcode.util.LogUtils;
 
@@ -18,18 +19,18 @@ public class MainPresenter extends BasePresenter<IMainView> {
         model = new MainInfoModel(new OkHttpClientImpl());
     }
 
-    public void sendNet(String date, String startTime, String endTime, String companyId, String fromType) {
+    public void sendNet(String date, String startTime, String endTime, String companyId, String fromType, String storeId) {
         if (mView != null)
             mView.showLoading();
         if (model != null)
-            model.sendNetQueryCount(date, startTime, endTime, companyId, fromType);
+            model.sendNetQueryCount(date, startTime, endTime, companyId, fromType, storeId);
     }
 
-    public void sendNet(int page, String date, String startTime, String endTime, String companyId, String fromType, boolean showDialog) {
+    public void sendNet(int page, String date, String startTime, String endTime, String companyId, String fromType, String storeId, boolean showDialog) {
         if (mView != null)
             // mView.showLoading();
             if (model != null)
-                model.sendNetQueryCount(page, date, startTime, endTime, companyId, fromType);
+                model.sendNetQueryCount(page, date, startTime, endTime, companyId, fromType, storeId);
     }
 
     @Register
@@ -40,8 +41,19 @@ public class MainPresenter extends BasePresenter<IMainView> {
         }
     }
 
-    public void sendNetPay(String payType, String price) {
-        model.sendNetPay(payType, price);
+    @Register
+    private void getQRcode(QRcodeResponse response) {
+        if (mView != null) {
+            mView.hideLoading();
+            mView.getQRcodeResult(response);
+        }
+    }
+
+    public void sendNetPayCode(String storeId, String companyId, String fromType) {
+        if (mView != null)
+            mView.showLoading();
+        if (model != null)
+            model.sendNetPay(storeId, companyId, fromType);
     }
 
     @Register

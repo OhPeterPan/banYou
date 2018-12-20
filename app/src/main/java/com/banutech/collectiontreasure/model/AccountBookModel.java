@@ -18,25 +18,11 @@ import java.util.HashMap;
 
 import io.reactivex.functions.Function;
 
-public class AccountBookModel {
+public class AccountBookModel extends BaseModel {
     private IHttpClient client;
 
     public AccountBookModel(IHttpClient client) {
         this.client = new WeakReference<>(client).get();
-    }
-
-    private String chianResult(String result) {
-        result = result.replaceAll("&lt;", "<");
-        result = result.replaceAll("&gt;", ">");
-        result = result.replaceAll("<return>", "");
-        result = result.replaceAll("</return>", "");
-        result = result.replaceAll("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">", "");
-        result = result.replaceAll("</soap:Envelope>", "");
-        result = result.replaceAll("<soap:Header>", "");
-        result = result.replaceAll("</soap:Header>", "");
-        result = result.replaceAll("<soap:Body>", "");
-        result = result.replaceAll("</soap:Body>", "");
-        return result;
     }
 
     public void sendNetStore(final String companyId, final String fromType) {
@@ -50,9 +36,8 @@ public class AccountBookModel {
                 IResponse response = client.post(request);
                 if (response.getCode() == BaseResponse.CODE_SUCCESS) {
                     String result = response.getData();
-                    result = chianResult(result);
+                    result = parseXmlResult(result);
                     Log.i("wak", result);
-
                     AccountBookResponse storeResponse = null;
                     try {
                         XStream xStream = new XStream();
@@ -82,7 +67,7 @@ public class AccountBookModel {
                 IResponse response = client.post(request);
                 if (response.getCode() == BaseResponse.CODE_SUCCESS) {
                     String result = response.getData();
-                    result = chianResult(result);
+                    result = parseXmlResult(result);
                     Log.i("wak", result);
 
                     OperatePersonResponse personResponse = null;
@@ -118,7 +103,7 @@ public class AccountBookModel {
                 IResponse response = client.post(request);
                 if (response.getCode() == BaseResponse.CODE_SUCCESS) {
                     String result = response.getData();
-                    result = chianResult(result);
+                    result = parseXmlResult(result);
                     Log.i("wak", result);
                     XStream xStream = new XStream();
                     xStream.autodetectAnnotations(true);

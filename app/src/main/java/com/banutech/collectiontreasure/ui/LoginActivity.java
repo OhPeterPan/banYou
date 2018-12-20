@@ -10,15 +10,19 @@ import android.widget.Toast;
 
 import com.banutech.collectiontreasure.R;
 import com.banutech.collectiontreasure.bean.LoginBean;
+import com.banutech.collectiontreasure.bean.StoreBean;
 import com.banutech.collectiontreasure.presenter.LoginPresenter;
 import com.banutech.collectiontreasure.response.UserLoginResponse;
 import com.banutech.collectiontreasure.rxBus.RxBus;
 import com.banutech.collectiontreasure.util.Convert;
 import com.banutech.collectiontreasure.util.IntentUtil;
+import com.banutech.collectiontreasure.util.LogUtil;
 import com.banutech.collectiontreasure.util.SpUtil;
 import com.banutech.collectiontreasure.util.ToastUtil;
 import com.banutech.collectiontreasure.view.ILoginView;
 import com.blankj.utilcode.util.StringUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -93,12 +97,32 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Radio
             ToastUtil.show("登陆成功!", Toast.LENGTH_SHORT);
             LoginBean loginBean = Convert.fromJson(response.returninfo, LoginBean.class);
             loginBean.mobile = tvLoginMobile.getText().toString().trim();
-            SpUtil.save(SpUtil.ACCOUNT, loginBean);
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
+            List<StoreBean> storeList = loginBean.store_list;
+            if (storeList != null) {
+                if (storeList.size() == 1) {
+                    LogUtil.logI("wak", "来这里？");
+                    loginBean.storeId = storeList.get(0).store_id;
+                    startActivityMain(loginBean);
+                } else {
+                    showSelectStoreDialog(storeList);
+                }
+            } else {
+                ToastUtil.show("无店铺", Toast.LENGTH_SHORT);
+            }
+
         } else {
             ToastUtil.show(response.errormsg, Toast.LENGTH_SHORT);
         }
+    }
+
+    private void showSelectStoreDialog(List<StoreBean> storeList) {
+
+    }
+
+    private void startActivityMain(LoginBean loginBean) {
+        SpUtil.save(SpUtil.ACCOUNT, loginBean);
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     public static void launchNewFlag(Context mContext) {

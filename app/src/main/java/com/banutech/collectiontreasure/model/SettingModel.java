@@ -16,25 +16,11 @@ import java.util.HashMap;
 
 import io.reactivex.functions.Function;
 
-public class SettingModel {
+public class SettingModel extends BaseModel {
     IHttpClient client;
 
     public SettingModel(IHttpClient client) {
         this.client = new WeakReference<>(client).get();
-    }
-
-    private String chainResult(String result) {
-        result = result.replaceAll("&lt;", "<");
-        result = result.replaceAll("&gt;", ">");
-        result = result.replaceAll("<return>", "");
-        result = result.replaceAll("</return>", "");
-        result = result.replaceAll("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">", "");
-        result = result.replaceAll("</soap:Envelope>", "");
-        result = result.replaceAll("<soap:Header>", "");
-        result = result.replaceAll("</soap:Header>", "");
-        result = result.replaceAll("<soap:Body>", "");
-        result = result.replaceAll("</soap:Body>", "");
-        return result;
     }
 
     public void setVoiceBroadcast(final String id, final String userType, final String value) {
@@ -49,7 +35,7 @@ public class SettingModel {
                 IResponse response = client.post(request);
                 if (response.getCode() == BaseResponse.CODE_SUCCESS) {
                     String result = response.getData();
-                    result = chainResult(result);
+                    result = parseXmlResult(result);
                     Log.i("wak", result);
                     VoiceReceiverResponse orderResponse = null;
                     try {

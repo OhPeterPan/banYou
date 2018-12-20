@@ -19,7 +19,6 @@ public class JPushMessageReceiver extends BroadcastReceiver {
 
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             LogUtils.iTag(TAG, "JPush 用户注册成功");
-
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             LogUtils.iTag(TAG, "接受到推送下来的自定义消息");
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
