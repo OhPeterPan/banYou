@@ -38,8 +38,6 @@ public class OrderDetailActivity extends BaseActivity<OrderDetailPresenter> impl
     private String date = "day";
     private String startTime = "";
     private String endTime = "";
-    private String companyid;
-    private String fromType;
     private int page = 1;
     private boolean isRefresh = true;
     private boolean hasMore = true;
@@ -128,6 +126,14 @@ public class OrderDetailActivity extends BaseActivity<OrderDetailPresenter> impl
             }
         } else {
             ToastUtil.show(response.errormsg, Toast.LENGTH_SHORT);
+        }
+    }
+
+    @Override
+    protected void adapterError() {
+        super.adapterError();
+        if (adapter != null && adapter.isLoading()) {
+            adapter.loadMoreFail();
         }
     }
 

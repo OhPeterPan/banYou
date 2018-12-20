@@ -40,6 +40,7 @@ import com.banutech.collectiontreasure.rxBus.RxBus;
 import com.banutech.collectiontreasure.util.Convert;
 import com.banutech.collectiontreasure.util.DecimalUtil;
 import com.banutech.collectiontreasure.util.IntentUtil;
+import com.banutech.collectiontreasure.util.LogUtil;
 import com.banutech.collectiontreasure.util.NumberUtil;
 import com.banutech.collectiontreasure.util.SpUtil;
 import com.banutech.collectiontreasure.util.TTSUtils;
@@ -261,6 +262,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         }
     }
 
+    @Override
+    protected void adapterError() {
+        super.adapterError();
+        if (adapter != null && adapter.isLoading()) {
+            adapter.loadMoreFail();
+        }
+    }
 
     @Override
     public void speak(final String message) {//语音播报
@@ -302,6 +310,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     @Override
     public void onLoadMoreRequested() {
         isRefresh = false;
+        LogUtil.logI("wak", "页码：" + page);
         presenter.sendNet(page, date, startTime, endTime, account.companyid, account.fromType, account.storeId, false);
     }
 }

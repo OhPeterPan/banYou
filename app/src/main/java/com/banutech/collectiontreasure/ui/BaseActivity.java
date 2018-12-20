@@ -36,7 +36,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends
 
     protected abstract int getLayoutId();
 
-
     public void showLoading() {
         if (loadDialog != null && !loadDialog.isShowing()) {
             loadDialog.show();
@@ -51,9 +50,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends
 
     public void error(IResponse response) {
         hideLoading();
+        adapterError();
         if (response.getException() != null) {
             ToastUtil.show(response.getException().getMessage(), Toast.LENGTH_SHORT);
         }
+    }
+
+    protected void adapterError() {
+
     }
 
     protected abstract void initPresenter();
