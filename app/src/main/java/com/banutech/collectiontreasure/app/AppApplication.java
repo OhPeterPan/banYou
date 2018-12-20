@@ -28,17 +28,14 @@ public class AppApplication extends Application {
         super.onCreate();
         app = this;
         Utils.init(this);
+
         SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID + "=5c0f5485");
         Setting.setShowLog(true); //设置日志开关（默认为true），设置成false时关闭语音云SDK日志打印
         TTSUtils.getInstance().init(); //初始化工具类
 
         JPushInterface.setDebugMode(SystemUtil.getDebug());
         JPushInterface.init(getApplicationContext());
-  /*      Album.initialize(
-                AlbumConfig.newBuilder(UIUtil.getContext())
-                        .setLocale(Locale.getDefault())
-                        .build()
-        );*/
+
         //开启一个前台服务
         ContextCompat.startForegroundService(getApplicationContext(), new Intent(getApplicationContext(), TTSService.class));
     }
@@ -48,5 +45,4 @@ public class AppApplication extends Application {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
-
 }

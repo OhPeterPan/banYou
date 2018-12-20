@@ -31,7 +31,8 @@ public class TTSService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        // LogUtil.logI("wak", "创建服务?");
+
+        LogUtil.logI(getClass().getSimpleName(), "创建");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(Integer.MAX_VALUE, new Notification());
         }
@@ -39,18 +40,20 @@ public class TTSService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // LogUtil.logI("wak", "开始服务?");
+
         String notification = intent.getStringExtra("notification");
         LoginBean account = (LoginBean) SpUtil.get(SpUtil.ACCOUNT, LoginBean.class);
-        if (!StringUtils.isEmpty(notification) && TextUtils.equals("1", account.is_broadcast)) {
-            LogUtil.logI("wak", "服务来吗?");
+        if (!StringUtils.isEmpty(notification) && account != null && TextUtils.equals("1", account.is_broadcast)) {
+
             PayResultMean payResultMean = Convert.fromJson(notification, PayResultMean.class);
             String result = new StringBuilder().append(payResultMean.type_name).append("收款").append(DecimalUtil.replaceZero(payResultMean.price)).append("元").toString();
+
             if (getStreamCurrentVolume() < getStreamMaxVolume() / 5) {
-                ToastUtil.show("当前音量过小", Toast.LENGTH_SHORT);
+                ToastUtil.show("当前音量过小", Toast.LENGTH_LONG);
             }
             TTSUtils.getInstance().speak(result);
         }
+        // stopSelf();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -63,13 +66,13 @@ public class TTSService extends Service {
     }
 
     private int getStreamMaxVolume() {
-        return getAudioManager().getStreamVolume(AudioManager.STREAM_MUSIC);
+        return getAudioManager().getStreamMaxVolume(AudioManager.STREAM_MUSIC);
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        // LogUtil.logI("wak", "回收服务?");
+        LogUtil.logI(getClass().getSimpleName(), "GG了");
         TTSUtils.getInstance().release();//释放资源
+        super.onDestroy();
     }
 }

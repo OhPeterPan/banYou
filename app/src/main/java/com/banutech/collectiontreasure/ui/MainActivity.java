@@ -273,6 +273,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         account = (LoginBean) SpUtil.get(SpUtil.ACCOUNT, LoginBean.class);
         if (QRcode != null && QRcode.isShowing())
             QRcode.dismiss();
+        ToastUtil.show("支付成功", Toast.LENGTH_SHORT);
         sendNet();
     }
 
@@ -288,7 +289,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
 
     private void showQRcodeDialog(QRcodeBean qRcodeBean) {
         try {
-            Bitmap bitmap = CodeCreator.createQRCode(qRcodeBean.code);
+            String result = qRcodeBean.code.replace("&amp;", "&");
+            Bitmap bitmap = CodeCreator.createQRCode(result);
             QRcodeDialog qRcodeDialog = new QRcodeDialog(this, bitmap);
             this.QRcode = qRcodeDialog;
             qRcodeDialog.show();

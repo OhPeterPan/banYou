@@ -65,7 +65,7 @@ public class TTSUtils implements InitListener, SynthesizerListener {
             mTts.setParameter(SpeechConstant.KEY_REQUEST_FOCUS, "true");
             // 设置音频保存路径，需要申请WRITE_EXTERNAL_STORAGE权限，如不需保存注释该行代码
 //        mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH,"./sdcard/iflytek.pcm");
-            LogUtil.logI("wak", "--初始化成完成-");
+            LogUtil.logI("TTSService", "--初始化成完成-");
         }
     }
 
@@ -98,14 +98,14 @@ public class TTSUtils implements InitListener, SynthesizerListener {
     public void onInit(int code) {
         if (code == ErrorCode.SUCCESS) {
             isInitSuccess = true;
-            LogUtil.logI("wak", "tts初始话success");
+            LogUtil.logI("TTSService", "tts初始话success");
         }
     }
 
     @Override
     public void onSpeakBegin() {
         // 监听：开始播放
-        LogUtil.logI("wak", "开始播放");
+        LogUtil.logI("TTSService", "开始播放");
     }
 
     @Override
@@ -127,6 +127,7 @@ public class TTSUtils implements InitListener, SynthesizerListener {
     @Override
     public void onSpeakProgress(int percent, int beginPos, int endPos) {
         // 播放进度
+
     }
 
     @Override
@@ -134,6 +135,7 @@ public class TTSUtils implements InitListener, SynthesizerListener {
         if (speechError != null) {//播报错误
             ToastUtil.show("播报错误：" + speechError.getErrorDescription(), Toast.LENGTH_SHORT);
         }
+        //UIUtil.getContext().stopService(new Intent(UIUtil.getContext(), TTSService.class));
     }
 
     public void pause() {//暂停播放
