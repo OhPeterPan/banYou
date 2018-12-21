@@ -4,4 +4,5 @@
     <item name="toolbar" type="id" />
     <item name="recyclerView" type="id" />
     <item name="viewStub" type="id">viewStub</item>
+    <item name="swipeRefresh" type="id">swipeRefresh</item>
 </resources>

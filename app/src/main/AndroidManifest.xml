@@ -187,7 +187,8 @@
 
         <service
             android:name=".service.TTSService"
-            android:exported="false" />
+            android:exported="false"
+            android:priority="1000" />
     </application>
 
 </manifest>

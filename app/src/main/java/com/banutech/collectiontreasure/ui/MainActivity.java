@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +52,8 @@ import com.gyf.barlibrary.ImmersionBar;
 import butterknife.BindView;
 import cn.jpush.android.api.JPushInterface;
 
-public class MainActivity extends BaseActivity<MainPresenter> implements IMainView, BaseQuickAdapter.RequestLoadMoreListener {
+public class MainActivity extends BaseActivity<MainPresenter> implements IMainView,
+        BaseQuickAdapter.RequestLoadMoreListener {
     private static final int REQUEST_CODE = 0x0010;
     @BindView(R.id.tvMainTitle)
     TextView tvMainTitle;
@@ -58,25 +61,19 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     TextView tvMainSetting;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tvMainTime)
     TextView tvMainTime;
-    @BindView(R.id.tvIncomeMoney)
     TextView tvIncomeMoney;
-    @BindView(R.id.tvDealCount)
     TextView tvDealCount;
-    @BindView(R.id.tvAccountBook)
     TextView tvAccountBook;
-    @BindView(R.id.tvReportForms)
     TextView tvReportForms;
-    @BindView(R.id.tvMainPay)
     TextView tvMainPay;
+    @BindView(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefresh;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private String date = "day";
     private String startTime = "";
     private String endTime = "";
-    private String companyid;
-    private String fromType;
     private int page = 1;
     private boolean isRefresh = true;
     private boolean hasMore = true;
@@ -108,10 +105,24 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         RxBus.getInstance().register(presenter);
         account = (LoginBean) SpUtil.get(SpUtil.ACCOUNT, LoginBean.class);
         JPushInterface.setAlias(this, 1, account.mobile);//设置别名  想不到什么好地方使用这个别名
+        swipeRefresh.setColorSchemeResources(R.color.colorAccent);
         initAdapter();
-        sendNet();
+        initHeadView();
+        sendNet(true);
         showCheckNotification();
         checkPermissionManager();
+    }
+
+    private void initHeadView() {
+        View headView = LayoutInflater.from(this).inflate(R.layout.main_head, null);
+        tvMainTime = headView.findViewById(R.id.tvMainTime);
+        tvIncomeMoney = headView.findViewById(R.id.tvIncomeMoney);
+        tvDealCount = headView.findViewById(R.id.tvDealCount);
+        tvAccountBook = headView.findViewById(R.id.tvAccountBook);
+        tvReportForms = headView.findViewById(R.id.tvReportForms);
+        tvMainPay = headView.findViewById(R.id.tvMainPay);
+        if (adapter != null)
+            adapter.addHeaderView(headView);
     }
 
     private void checkPermissionManager() {
@@ -152,16 +163,17 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
 
     private void initAdapter() {
         adapter = new MainAdapter();
+        adapter.setHeaderAndEmpty(true);
         recyclerView.setHasFixedSize(true);
         adapter.setOnLoadMoreListener(this, recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
 
-    private void sendNet() {
+    private void sendNet(boolean showDialog) {
         page = 1;
         isRefresh = true;
-        presenter.sendNet(date, startTime, endTime, account.companyid, account.fromType, account.storeId);
+        presenter.sendNet(date, startTime, endTime, account.companyid, account.fromType, account.storeId, showDialog);
     }
 
     @Override
@@ -212,7 +224,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
                         tvMainTime.setText("近30天");
                         break;
                 }
-                sendNet();
+                sendNet(true);
             }
         }
     }
@@ -274,7 +286,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         if (QRcode != null && QRcode.isShowing())
             QRcode.dismiss();
         ToastUtil.show("支付成功", Toast.LENGTH_SHORT);
-        sendNet();
+        sendNet(true);
     }
 
     @Override
@@ -304,5 +316,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         isRefresh = false;
         LogUtil.logI("wak", "页码：" + page);
         presenter.sendNet(page, date, startTime, endTime, account.companyid, account.fromType, account.storeId, false);
+    }
+
+    @Override
+    public void innerRefresh() {
+        super.innerRefresh();
+        sendNet(false);
     }
 }

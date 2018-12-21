@@ -7,173 +7,182 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <LinearLayout
+    <!--  <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/common_color"
+          android:orientation="vertical">-->
+
+    <android.support.v7.widget.Toolbar
+        android:id="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/common_color"
-        android:orientation="vertical">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height">
-
-            <TextView
-                android:id="@+id/tvMainTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="班友收款"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/title_size" />
-
-            <TextView
-                android:id="@+id/tvMainSetting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:padding="12dp"
-                android:text="设置"
-                android:textColor="@android:color/white"
-                android:textSize="12sp" />
-        </android.support.v7.widget.Toolbar>
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/common_color">
 
         <TextView
-            android:id="@+id/tvMainTime"
+            android:id="@+id/tvMainTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="6dp"
-            android:drawableRight="@mipmap/ic_triangle_white"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:padding="12dp"
-            android:text="今日"
+            android:text="班友收款"
             android:textColor="@android:color/white"
-            android:textSize="13sp" />
+            android:textSize="@dimen/title_size" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvMainSetting"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_gravity="right"
+            android:padding="12dp"
+            android:text="设置"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+    </android.support.v7.widget.Toolbar>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+    <!--     <TextView
+             android:id="@+id/tvMainTime"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:drawablePadding="6dp"
+             android:drawableRight="@mipmap/ic_triangle_white"
+             android:gravity="center"
+             android:padding="12dp"
+             android:text="今日"
+             android:textColor="@android:color/white"
+             android:textSize="13sp" />
 
-                <TextView
-                    android:id="@+id/tvIncomeMoney"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textSize="19sp"
-                    android:textStyle="bold"
-                    tools:text="￥1234345" />
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:text="收入金额"
-                    android:textColor="@android:color/white"
-                    android:textSize="13sp" />
-            </LinearLayout>
+             <LinearLayout
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_marginBottom="12dp"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                 android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                 <TextView
+                     android:id="@+id/tvIncomeMoney"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:textColor="@android:color/white"
+                     android:textSize="19sp"
+                     android:textStyle="bold"
+                     tools:text="￥1234345" />
 
-                <TextView
-                    android:id="@+id/tvDealCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textSize="19sp"
-                    android:textStyle="bold"
-                    tools:text="5" />
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="3dp"
+                     android:text="收入金额"
+                     android:textColor="@android:color/white"
+                     android:textSize="13sp" />
+             </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:text="交易笔数"
-                    android:textColor="@android:color/white"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
+             <LinearLayout
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                 android:orientation="vertical">
 
-        <LinearLayout
+                 <TextView
+                     android:id="@+id/tvDealCount"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:textColor="@android:color/white"
+                     android:textSize="19sp"
+                     android:textStyle="bold"
+                     tools:text="5" />
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="3dp"
+                     android:text="交易笔数"
+                     android:textColor="@android:color/white"
+                     android:textSize="13sp" />
+             </LinearLayout>
+         </LinearLayout>
+
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+             <com.banutech.collectiontreasure.custom_view.ImageCenterTextView
+                 android:id="@+id/tvMainPay"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:drawableLeft="@mipmap/ic_send_money"
+                 android:drawablePadding="3dp"
+                 android:gravity="center"
+                 android:padding="12dp"
+                 android:text="收款"
+                 android:textColor="@android:color/white"
+                 android:textSize="13sp" />
+
+             <View
+                 android:layout_width="1dp"
+                 android:layout_height="match_parent"
+                 android:layout_marginBottom="6dp"
+                 android:layout_marginTop="6dp"
+                 android:background="@android:color/white" />
+
+             <com.banutech.collectiontreasure.custom_view.ImageCenterTextView
+                 android:id="@+id/tvAccountBook"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="1"
+                 android:drawableLeft="@mipmap/ic_account_book"
+                 android:drawablePadding="3dp"
+                 android:gravity="center"
+                 android:text="账本"
+                 android:textColor="@android:color/white"
+                 android:textSize="13sp" />
+
+             <View
+                 android:layout_width="1dp"
+                 android:layout_height="match_parent"
+                 android:layout_marginBottom="6dp"
+                 android:layout_marginTop="6dp"
+                 android:background="@android:color/white" />
+
+             <com.banutech.collectiontreasure.custom_view.ImageCenterTextView
+                 android:id="@+id/tvReportForms"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="1"
+                 android:drawableLeft="@mipmap/ic_report_forms"
+                 android:drawablePadding="3dp"
+                 android:gravity="center"
+                 android:text="报表"
+                 android:textColor="@android:color/white"
+                 android:textSize="13sp" />
+         </LinearLayout>-->
+    <!--  </LinearLayout>-->
+
+    <!--    <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="6dp"
+            android:background="#eee" />-->
 
-            <com.banutech.collectiontreasure.custom_view.ImageCenterTextView
-                android:id="@+id/tvMainPay"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableLeft="@mipmap/ic_send_money"
-                android:drawablePadding="3dp"
-                android:gravity="center"
-                android:padding="12dp"
-                android:text="收款"
-                android:textColor="@android:color/white"
-                android:textSize="13sp" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="6dp"
-                android:layout_marginTop="6dp"
-                android:background="@android:color/white" />
-
-            <com.banutech.collectiontreasure.custom_view.ImageCenterTextView
-                android:id="@+id/tvAccountBook"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableLeft="@mipmap/ic_account_book"
-                android:drawablePadding="3dp"
-                android:gravity="center"
-                android:text="账本"
-                android:textColor="@android:color/white"
-                android:textSize="13sp" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="6dp"
-                android:layout_marginTop="6dp"
-                android:background="@android:color/white" />
-
-            <com.banutech.collectiontreasure.custom_view.ImageCenterTextView
-                android:id="@+id/tvReportForms"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableLeft="@mipmap/ic_report_forms"
-                android:drawablePadding="3dp"
-                android:gravity="center"
-                android:text="报表"
-                android:textColor="@android:color/white"
-                android:textSize="13sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="#eee" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@id/recyclerView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:overScrollMode="never" />
+        android:overScrollMode="never">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:overScrollMode="never" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

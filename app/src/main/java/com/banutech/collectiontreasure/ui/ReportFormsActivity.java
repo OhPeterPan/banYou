@@ -173,7 +173,7 @@ public class ReportFormsActivity extends BaseActivity<ReportFormsPresenter> impl
         xAxis.setDrawGridLines(false);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setAxisMinimum(-0.2f);
-        //xAxis.setAxisMaximum(xAxis.getAxisMaximum() + 0.2f);
+        xAxis.setAxisMaximum(xValues.size() - 0.5f);
         xAxis.setGranularity(1f);
         xAxis.setLabelRotationAngle(-45);
         xAxis.setLabelCount(xValues.size(), false);
@@ -235,7 +235,8 @@ public class ReportFormsActivity extends BaseActivity<ReportFormsPresenter> impl
         LineData lineData = new LineData(lineDataSet);
         lineChart.setData(lineData);
         reportData.removeAllViews();
-        reportData.addView(lineChart, new FrameLayout.LayoutParams(-1, -1));
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-1, -1);
+        reportData.addView(lineChart, lp);
     }
 
     /**

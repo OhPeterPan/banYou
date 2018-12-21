@@ -1,12 +1,15 @@
 package com.banutech.collectiontreasure.app;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.support.v4.content.ContextCompat;
 
 import com.banutech.collectiontreasure.service.TTSService;
+import com.banutech.collectiontreasure.util.LogUtil;
 import com.banutech.collectiontreasure.util.SystemUtil;
 import com.banutech.collectiontreasure.util.TTSUtils;
 import com.blankj.utilcode.util.Utils;
@@ -38,11 +41,53 @@ public class AppApplication extends Application {
 
         //开启一个前台服务
         ContextCompat.startForegroundService(getApplicationContext(), new Intent(getApplicationContext(), TTSService.class));
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                LogUtil.logI("app", "onActivityCreated()");
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+                LogUtil.logI("application", "onActivityStarted()");
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+                LogUtil.logI("application", "onActivityResumed()");
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+                LogUtil.logI("application", "onActivityPaused()");
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+                LogUtil.logI("application", "onActivityStopped()");
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+                LogUtil.logI("application", "onActivitySaveInstanceState()");
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                LogUtil.logI("application", "onActivityDestroyed()");
+            }
+        });
     }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        LogUtil.logI("application", "这是啥");
     }
 }

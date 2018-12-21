@@ -47,7 +47,7 @@
             android:drawableRight="@mipmap/ic_report_triangle"
             android:gravity="center"
             android:padding="6dp"
-            android:text="近7天"
+            android:text="今日"
             android:textColor="#666"
             android:textSize="13sp" />
     </FrameLayout>

@@ -2,6 +2,7 @@ package com.banutech.collectiontreasure.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -16,11 +17,12 @@ import com.gyf.barlibrary.ImmersionBar;
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity<T extends BasePresenter> extends
-        AppCompatActivity implements View.OnClickListener {
+        AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private View back;
     public T presenter;
     private LoadDialog loadDialog;
+    private SwipeRefreshLayout swipeRefresh;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +47,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends
     public void hideLoading() {
         if (loadDialog != null && loadDialog.isShowing()) {
             loadDialog.dismiss();
+        }
+        if (swipeRefresh != null && swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
         }
     }
 
@@ -77,6 +82,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends
 
     private void initView() {
         back = findViewById(R.id.back);
+        swipeRefresh = findViewById(R.id.swipeRefresh);
+        if (swipeRefresh != null) {
+            swipeRefresh.setColorSchemeResources(R.color.colorAccent);
+            swipeRefresh.setOnRefreshListener(this);
+        }
         if (back != null) {
             back.setOnClickListener(this);
         }
@@ -97,5 +107,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends
                 break;
         }
         onInnerListener(v);
+    }
+
+    @Override
+    public void onRefresh() {
+        innerRefresh();
+    }
+
+    public void innerRefresh() {
+
     }
 }

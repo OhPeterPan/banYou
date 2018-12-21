@@ -11,6 +11,7 @@ import com.banutech.collectiontreasure.response.MainCountResponse;
 import com.banutech.collectiontreasure.response.MainListResponse;
 import com.banutech.collectiontreasure.response.QRcodeResponse;
 import com.banutech.collectiontreasure.rxBus.RxBus;
+import com.banutech.collectiontreasure.util.LogUtil;
 import com.thoughtworks.xstream.XStream;
 
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class MainInfoModel extends BaseModel {
     public void sendNetQueryCount(final String date, final String startTime,
                                   final String endTime, final String companyId,
                                   final String fromType, final String storeId) {
-
+        LogUtil.logI("wak", date + "::" + startTime + "::" + endTime + "::" + companyId + ":::" + fromType + "::" + storeId);
         RxBus.getInstance().chain(new Function() {
             @Override
             public Object apply(Object o) throws Exception {

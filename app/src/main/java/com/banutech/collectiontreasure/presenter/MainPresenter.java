@@ -19,8 +19,8 @@ public class MainPresenter extends BasePresenter<IMainView> {
         model = new MainInfoModel(new OkHttpClientImpl());
     }
 
-    public void sendNet(String date, String startTime, String endTime, String companyId, String fromType, String storeId) {
-        if (mView != null)
+    public void sendNet(String date, String startTime, String endTime, String companyId, String fromType, String storeId, boolean showDialog) {
+        if (mView != null && showDialog)
             mView.showLoading();
         if (model != null)
             model.sendNetQueryCount(date, startTime, endTime, companyId, fromType, storeId);

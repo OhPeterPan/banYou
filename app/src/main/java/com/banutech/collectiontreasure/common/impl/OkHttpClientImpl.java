@@ -35,6 +35,7 @@ public class OkHttpClientImpl implements IHttpClient {
         try {
             baseResponse = new BaseResponse();
             String requestBody = request.createNetSoapText();
+            LogUtil.logI("wak", "请求体：" + requestBody);
             RequestBody body = RequestBody.create(MediaType.parse("text/xml; charset=utf-8"), requestBody);
             Request re = new Request.Builder().url(urlAddress).post(body).build();
             call = client.newCall(re);
@@ -47,7 +48,7 @@ public class OkHttpClientImpl implements IHttpClient {
             }
 
             Response response = call.execute();
-            LogUtil.logI("wak", "当前联网返回码:" + response.code());
+            //LogUtil.logI("wak", "当前联网返回码:" + response.code());
             if (response.code() == BaseResponse.CODE_SUCCESS) {
                 baseResponse.setCode(response.code());
                 baseResponse.setData(response.body().string());
