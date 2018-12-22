@@ -55,7 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="12dp"
+        android:visibility="gone">
 
         <RadioButton
             android:id="@+id/rbLoginSeller"
