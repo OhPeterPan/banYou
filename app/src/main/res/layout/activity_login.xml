@@ -28,9 +28,9 @@
         android:hint="账号"
         android:inputType="phone"
         android:padding="12dp"
-        android:text="18036092593"
         android:textColor="#4b4b4b"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        tools:text="18036092593" />
 
     <EditText
         android:id="@+id/tvLoginPwd"
@@ -45,9 +45,9 @@
         android:hint="密码"
         android:inputType="textPassword"
         android:padding="12dp"
-        android:text="123456"
         android:textColor="#4b4b4b"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        tools:text="123456" />
 
     <RadioGroup
         android:id="@+id/rgLoginSelect"
