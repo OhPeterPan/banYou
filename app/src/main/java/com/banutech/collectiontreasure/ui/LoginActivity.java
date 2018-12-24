@@ -3,6 +3,8 @@ package com.banutech.collectiontreasure.ui;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
@@ -34,6 +36,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Radio
     EditText tvLoginPwd;
     @BindView(R.id.tvConfirmLogin)
     TextView tvConfirmLogin;
+    @BindView(R.id.tvLoginRegister)
+    TextView tvLoginRegister;
     @BindView(R.id.rgLoginSelect)
     RadioGroup rgLoginSelect;
 
@@ -46,11 +50,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Radio
     protected void initListener() {
         rgLoginSelect.setOnCheckedChangeListener(this);
         tvConfirmLogin.setOnClickListener(this);
+        tvLoginRegister.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
         RxBus.getInstance().register(presenter);
+        tvLoginRegister.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        tvLoginRegister.getPaint().setAntiAlias(true);
     }
 
     @Override
@@ -70,6 +77,22 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Radio
             case R.id.tvConfirmLogin:
                 login();
                 break;
+            case R.id.tvLoginRegister:
+                userRegister();
+                //startActivity(new Intent(this,RegisterActivity.class));
+                break;
+        }
+    }
+
+    private String url = "https://www.banutech.com/apply/apply_receipt_code.html";
+
+    private void userRegister() {
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        if (intent.resolveActivity(getPackageManager()) != null) { // 网址正确 跳转成功
+            startActivity(intent);
+        } else { //网址不正确 跳转失败 提示错误
+            ToastUtil.show("网址输入错误，请重新输入！", Toast.LENGTH_SHORT);
         }
     }
 

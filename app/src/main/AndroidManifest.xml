@@ -184,6 +184,7 @@
         <activity android:name=".ui.OrderDetailActivity" />
         <activity android:name=".ui.AboutActivity" />
         <activity android:name=".ui.UserSchemeActivity" />
+        <activity android:name=".ui.RegisterActivity" />
 
         <service
             android:name=".service.TTSService"
